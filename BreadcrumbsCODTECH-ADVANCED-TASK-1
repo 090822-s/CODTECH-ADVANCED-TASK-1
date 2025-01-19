@@ -1,0 +1,40 @@
+// C++ code
+//
+#include <Adafruit_LiquidCrystal.h>
+
+#include "Adafruit_LEDBackpack.h"
+
+int seconds = 0;
+
+int buttonState = 0;
+
+int exnvalue = 0;
+
+Adafruit_LiquidCrystal lcd_1(0);
+
+Adafruit_7segment led_display1 = Adafruit_7segment();
+
+void setup()
+{
+  lcd_1.begin(16, 2);
+  led_display1.begin(112);
+  pinMode(2, INPUT);
+
+  lcd_1.print("0");
+  led_display1.println("0000");
+  led_display1.writeDisplay();
+  exnvalue = 0;
+}
+
+void loop()
+{
+  buttonState = digitalRead(2);
+  delay(100); // Wait for 100 millisecond(s)
+  if (buttonState == HIGH) {
+    exnvalue += 1;
+    led_display1.println(exnvalue);
+    led_display1.writeDisplay();
+    lcd_1.clear();
+    lcd_1.print(exnvalue);
+  }
+}
